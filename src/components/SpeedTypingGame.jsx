@@ -113,22 +113,28 @@ function SpeedTypingGame() {
   };
 
   const resetGame = () => {
-    setIsTyping(false);
-    setTimeLeft(maxTime);
-    setCharIndex(0);
-    setMistakes(0);
-    setTypingText('');
-    setCPM(0);
-    setWPM(0);
+  setIsTyping(false);
+  setTimeLeft(maxTime);
+  setCharIndex(0);
+  setMistakes(0);
+  setCPM(0);
+  setWPM(0);
+
+  // Load new paragraph first
+  loadParagraph();
+
+  // After DOM updates, highlight the first character as active
+  setTimeout(() => {
     const characters = document.querySelectorAll('.char');
-    characters.forEach(span => {
-      span.classList.remove("correct");
-      span.classList.remove('wrong');
-      span.classList.remove('active');
-    });
-    characters[0].classList.add('active');
-    loadParagraph();
-  };
+    if (characters.length > 0) {
+      characters.forEach((span) => {
+        span.classList.remove("correct", "wrong", "active");
+      });
+      characters[0].classList.add("active");
+    }
+  }, 0);
+};
+
 
   useEffect(() => {
     loadParagraph();
